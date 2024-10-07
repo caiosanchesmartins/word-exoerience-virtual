@@ -1,0 +1,454 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #fff;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+  
+  body {
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    opacity: 0.95;
+  }
+  #mobile_menu {
+    display: none;
+    background-color: #333;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 200px;
+    border-radius: 5px;
+}
+
+#mobile_menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#mobile_menu li {
+    margin-bottom: 10px;
+}
+
+#mobile_menu li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#mobile_menu li a:hover {
+    color: #6A1B9A;
+}
+
+#mobile_btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #6A1B9A;
+    background: none;
+    border: none;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    #nav_list {
+        display: none;
+    }
+
+    #mobile_btn {
+        display: block;
+    }
+}
+
+.success-message {
+background-color: #6A1B9A; /* Verde para sucesso */
+color: white;
+padding: 15px;
+border-radius: 5px;
+margin: 20px 0;
+text-align: center;
+}
+
+.profile-container {
+position: relative;
+background-color: #121212;
+}
+
+.profile-button {
+background-color: #6A1B9A;
+color: #6A1B9A;
+border: none;
+padding: 10px;
+cursor: pointer;
+border-radius: 5px;
+font-size: 25px;
+transition: background 0.3s;
+background-color: #121212;
+margin-left: 30px;
+}
+.profile-button:hover{
+    background-color: white;
+    transition: all 0.15s;
+}
+
+
+
+.profile-menu {
+display: none;
+position: absolute;
+top: 40px;
+right: 0;
+background-color: #333;
+color: white;
+padding: 10px;
+border-radius: 5px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+z-index: 10;
+width: 150px;
+text-align: center;
+}
+
+.profile-menu .username {
+margin: 0;
+font-size: 16px;
+margin-bottom: 10px;
+text-align: center;
+}
+
+.logout-button {
+background-color: #6A1B9A;
+color: white;
+border: none;
+padding: 8px 12px;
+cursor: pointer;
+border-radius: 5px;
+font-size: 14px;
+width: 100%;
+transition: background 0.3s;
+}
+
+.logout-button:hover {
+background-color: #6A1B9A;
+}
+
+.cadastro-button {
+display: inline-block; /* Para que o botão tenha comportamento de bloco */
+background-color: #6A1B9A !important; /* Cor de fundo */
+color: white !important; /* Cor do texto */
+padding: 10px 20px !important; /* Espaçamento interno */
+text-decoration: none !important; /* Remove o sublinhado */
+border-radius: 5px !important; /* Cantos arredondados */
+padding: 15px 30px; /* Aumentando o preenchimento */
+font-size: 16px; /* Ajustando o tamanho da fonte */
+width: 100%;
+text-align: center;
+transition: background-color 0.3s !important; /* Animação para a transição de cor */
+}
+
+.cadastro-button:hover {
+background-color: #5a0d82 !important; /* Cor de fundo ao passar o mouse */
+}
+  
+  header {
+    width: 100%;
+    padding: 28px 8%;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-primary-1);
+    z-index: 99999; /* Garante que o header esteja sempre no topo */
+  }
+  button, .nav-item a {
+    touch-action: manipulation; /* Melhora a responsividade ao toque */
+}
+
+#navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Ajuste para centralizar os itens horizontalmente */
+    color: #ffffff;
+}
+
+#nav_logo {
+    font-size: 36px; /* Ajuste o tamanho do ícone */
+    color: #ffffff;
+    margin-right: auto; /* Adiciona margem automática para empurrar o logo para a esquerda */
+    text-decoration: none; /* Remove o sublinhado padrão do link */
+    cursor: pointer; /* Torna o cursor um ponteiro para indicar que é clicável */
+}
+  
+  #nav_logo span {
+    display: inline-block; /* Se necessário para garantir que o conteúdo se comporte como esperado */
+}
+
+
+#nav_list {
+    display: flex;
+    list-style: none;
+    gap: 48px;
+    color: #ffffff;
+    font-size: 19px;
+    justify-content: center; /* Centraliza os itens horizontalmente */
+
+}
+
+
+.nav-item a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    color: #ffffff;
+    
+}
+
+.nav-item a:hover{
+    text-decoration: none;
+    color: #6A1B9A;
+    font-size: 20px;
+    transition: all 0.3s;
+}
+
+.nav-item.active a {
+    color: var(--color-neutral-1);
+    border-bottom: 3px solid var(--color-primary-4);
+    color: #6A1B9A;
+    
+}
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-toggle {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    display: none; /* Escondido inicialmente */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
+    list-style: none;
+    opacity: 0; /* Começa invisível */
+    transform: translateY(-10px); /* Movido para cima */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Animação de opacidade e movimento */
+  }
+  
+  .dropdown-menu.show {
+    display: block; /* Exibe o menu quando a classe "show" está presente */
+    opacity: 1; /* Torna visível */
+    transform: translateY(0); /* Volta à posição original */
+  }
+  
+  
+  
+  
+  .dropdown-menu li {
+    margin: 0;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  
+  .dropdown-menu a:hover {
+    background: #6A1B9A;
+    color: white;
+  }
+  
+  /* Mostrar o menu dropdown ao passar o mouse */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    transition: all 1s;
+  }
+  
+  /* Estilização do menu mobile */
+  #mobile_menu {
+    display: none;
+    background-color: #333;
+    padding: 10px;
+    position: absolute;
+    top: 100%; /* Coloca o menu logo abaixo do botão */
+    right: 0; /* Ajusta para aparecer alinhado à direita */
+    width: 200px;
+    border-radius: 5px;
+    z-index: 99999; /* Mantém o menu na frente de outros elementos */
+  }
+  
+  #mobile_btn {
+    display: none; /* Escondido por padrão */
+  }
+  
+  /* Estilização para telas menores que 1170px */
+  @media screen and (max-width: 1170px) {
+    #mobile_btn {
+      display: block; /* Mostra o ícone apenas em telas menores */
+      font-size: 24px;
+      cursor: pointer;
+      color: #6A1B9A;
+      background: none;
+      border: none;
+      z-index: 10000; /* Certifica-se de que o botão esteja no topo */
+      position: relative;
+    }
+  
+    #nav_list {
+      display: none; /* Esconde a lista de navegação em telas menores */
+    }
+  
+    #mobile_menu.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    #mobile_nav_list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 12px 0px;
+      z-index: 99999;
+    }
+  
+    #mobile_nav_list .nav-item {
+      list-style: none;
+      text-align: center;
+      z-index: 99999;
+    }
+  }
+  
+  @media screen and (min-width: 1170px) {
+    #mobile_btn {
+      display: none; /* Esconde o ícone do mobile em telas grandes */
+    }
+  
+    #nav_list {
+      display: flex; /* Mostra a barra de navegação normal em telas grandes */
+    }
+  }
+  
+  #mobile_menu {
+    display: none;
+    background-color: #333;
+    padding: 10px;
+    position: relative; /* Isso garante que o z-index seja aplicado corretamente */
+    top: 60px;
+    right: 10px;
+    width: 200px;
+    border-radius: 5px;
+    z-index: 9999; /* Z-index bem alto para aparecer na frente */
+  }
+  
+  #mobile_menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #mobile_menu li {
+    margin-bottom: 10px;
+  }
+  
+  #mobile_menu li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  #mobile_menu li a:hover {
+    color: #6A1B9A;
+  }
+  
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    #nav_list {
+        display: none;
+        z-index: 99999;
+    }
+  
+    #mobile_btn {
+      font-size: 24px;
+      cursor: pointer;
+      color: #6A1B9A;
+      background: none;
+      border: none;
+      position: relative;
+      z-index: 10000; /* Para garantir que o botão esteja no topo */
+    }
+  }
+  
+  #street-view {
+    width: 100%;
+    max-width: 1400px;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    margin: 0 auto;
+    margin-top: 25px;
+    z-index: 0; /* Garante que o street-view fique atrás de outros elementos */
+  }
+  
+  
+  #toggle-vr {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(132, 14, 201);
+    color: white;
+    cursor: pointer;
+    border: none;
+    z-index: 10;
+  }
+  
+  
+  @media screen and (max-width: 768px) {
+    #mobile_menu ul {
+      flex-direction: column;
+    }
+  
+    .hero-content h1 {
+      font-size: 2.5em;
+    }
+  
+    .hero-content p {
+      font-size: 1.5em;
+    }
+  }
+  
+  /* Animações */
+  @keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+  }

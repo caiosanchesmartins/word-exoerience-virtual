@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="World Experience Virtual é um site de experiências de realidade virtual. Explore o mundo no conforto de sua casa.">
+    <meta name="keywords" content="realidade virtual, viagens, exploração, experiências virtuais">
+    <title>World Experience Virtual</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styleinicio.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1 id="title">World Experience Virtual</h1>
+        <input id="search-input" class="controls" type="text" placeholder="Pesquisar lugar">
+        <button id="search-button" onclick="searchPlaceByName(document.getElementById('search-input').value)">
+            <i class="fas fa-search"></i>
+        </button>
+        <nav>
+            <ul>
+                <li><a href="cadastro123.html">Cadastro</a></li>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <video autoplay muted loop id="bg-video">
+            <source src="video.mp4" type="video/mp4">
+            <source src="video.webm" type="video/webm">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+        <div class="hero-content">
+            <h1>Explore o Mundo em Realidade Virtual</h1>
+            <p>Experimente as maravilhas do mundo no conforto de sua casa.</p>
+            <button id="explore-btn">Explore Agora</button>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <div class="container">
+            <h2>Destinos Populares</h2>
+            <div id="pesquisa">
+                <input id="search-box" class="controls" type="text" placeholder="Search Box">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+                <div class="destinations-grid">
+                    <div class="destination">
+                        <img src="destino1.jpg" alt="Imagem do Destino 1">
+                        <h3><a href="inicio.html?lat=61.2181&lng=-149.9003" id="specific-location">Alaska</a></h3>
+                    </div>
+                    <div class="destination">   
+                        <img src="destino2.jpg" alt="Imagem do Destino 2">
+                        <h3><a href="inicio.html?lat=25.0343&lng=-77.3963" id="specific-location">Bahamas</a></h3>
+                    </div>
+                    <div class="destination">
+                        <img src="destino3.jpg" alt="Imagem do Destino 3">
+                        <h3><a href="inicio.html?lat=48.8584&lng=2.2945" id="specific-location">Torre Eiffel</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos">
+        <div class="container">
+            <h2>O Que Nossos Usuários Dizem</h2>
+            <div class="testimonial">
+                <p>"Experiência incrível! Me senti como se estivesse realmente lá."</p>
+                <p>- Usuário 1</p>
+            </div>
+            <div class="testimonial">
+                <p>"Uma ótima maneira de ver o mundo sem sair de casa."</p>
+                <p>- Usuário 2</p>
+            </div>
+            <div class="testimonial">
+                <p>"Tecnologia incrível e visuais deslumbrantes."</p>
+                <p>- Usuário 3</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="ranking">
+        <div class="container">
+            <h2>Ranking dos Locais Mais Visitados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome do Lugar</th>
+                        <th>Visitas</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Conexão com o banco de dados
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "places";
+
+                    // Cria conexão
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+
+                    // Verifica a conexão
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    
+                    $sql = "SELECT id FROM places WHERE place_id = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("s", $placeId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                
+                    if ($result->num_rows > 0) 
+                        // Se o lugar já existe, atualiza o contador de visitas
+                        $sql = "UPDATE places SET visits = visits + 1 WHERE place_id = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("s", $placeId);
+                    // Atualiza o número de visitas
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $placeName = isset($_POST['placeName']) ? $_POST['placeName'] : '';
+
+                        $sql = "INSERT INTO places (name, visits) VALUES (?, 1)
+                                ON DUPLICATE KEY UPDATE visits = visits + 1";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("s", $placeName);
+                        $stmt->execute();
+                        $stmt->close();
+                    }
+
+                    // Consulta os lugares mais visitados
+                    $sql = "SELECT name, visits FROM places ORDER BY visits DESC LIMIT 10";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>
+                                    <td>" . htmlspecialchars($row["name"]) . "</td>
+                                    <td>" . $row["visits"] . "</td>
+                                    <td><button class='visit-btn' onclick\"searchPlaceByName('" . htmlspecialchars($row["name"]) . "')\">Visitar Novamente</button></td>
+                                  </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='3'>Nenhum dado disponível</td></tr>";
+                    }
+
+                    $conn->close();
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="contato">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <form action="enviar_email.php" method="post">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2023 World Experience Virtual. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="street-view">
+        <button id="toggle-vr">Sair da VR</button>
+    </div>
+
+    <script>
+        var map, panorama;
+
+        function initMap() {
+            var initialLocation = {lat: -25.344, lng: 131.036}; // Coordenadas para inicializar o mapa
+            var mapOptions = {
+                center: initialLocation,
+                zoom: 8,
+                streetViewControl: false,
+                mapTypeControl: false,
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            var input = document.getElementById('search-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    if (!place.geometry) {
+                        console.log("Place has no geometry");
+                        return;
+                    }
+
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+
+                map.fitBounds(bounds);
+            });
+
+            var panoOptions = {
+                position: initialLocation,
+                pov: {heading: 165, pitch: 0},
+                visible: true
+            };
+            panorama = new google.maps.StreetViewPanorama(
+                document.getElementById('street-view'), panoOptions);
+            map.setStreetView(panorama);
+
+            document.getElementById('toggle-vr').addEventListener('click', function() {
+                toggleStreetView();
+            });
+        }
+
+        function toggleStreetView() {
+            var toggle = panorama.getVisible();
+            if (toggle == false) {
+                panorama.setVisible(true);
+            } else {
+                panorama.setVisible(false);
+            }
+        }
+
+        function searchPlaceByName(placeName) {
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({'address': placeName}, function(results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    panorama.setPosition(results[0].geometry.location);
+                    panorama.setVisible(true);
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo e layout */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: lightgray;
+    background-color: #000; /* Fundo preto para o restante da página */
+    overflow-x: hidden;
+}
+
+/* Imagem de fundo fixa */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Altura da imagem de fundo até a altura da viewport */
+    background-image: url('fotografo.jpg'); /* Substitua pelo caminho da sua imagem */
+    background-size: cover;
+    background-position: center;
+    z-index: -2; /* Coloca atrás do conteúdo */
+}
+
+/* Camada preta semitransparente */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Altura da camada preta */
+    background: rgba(0, 0, 0, 0.7); /* Preto com opacidade ajustada */
+    z-index: -1; /* Coloca acima da imagem de fundo e abaixo do conteúdo */
+}
+
+/* Estilos do header */
+header {
+    background: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+    color: lightgray;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 1; /* Garante que o header fique acima da camada preta */
+}
+
+/* Estilos de navegação */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ajusta a distribuição dos itens dentro do nav */
+}
+
+.logo {
+    flex: 1; /* Permite que a logo ocupe o espaço restante e empurre os itens de navegação para o centro */
+}
+
+.logo h1 {
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    margin: 0 auto; /* Centraliza a navegação horizontalmente */
+}
+
+.nav-links li {
+    margin: 0;
+}
+
+.nav-links a {
+    color: lightgray;
+    text-decoration: none;
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+.nav-links a:hover {
+    background: #6a0dad; /* Detalhes em roxo */
+    border-radius: 5px;
+}
+
+.profile-menu-container {
+    position: relative;
+}
+
+.profile-icon {
+    width: 40px;
+    cursor: pointer;
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #333;
+    color: lightgray;
+    border: 1px solid #444;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.profile-menu a {
+    display: block;
+    padding: 10px;
+    color: lightgray;
+    text-decoration: none;
+}
+
+.profile-menu a:hover {
+    background: #6a0dad; /* Detalhes em roxo */
+}
+
+/* Estilos do portfólio */
+.profile {
+    padding: 60px 20px; /* Mais espaçamento para destacar a seção */
+    background: #000; /* Fundo preto para a seção de portfólio */
+}
+
+/* Ajustes para o contêiner de upload e fotos */
+.upload-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+#upload-btn {
+    background: #6a0dad;
+    color: lightgray;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-size: 1em;
+}
+
+#upload-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Oculta o input de file */
+#file-upload {
+    display: none;
+}
+
+/* Botão padrão */
+button {
+    background: #6a0dad; /* Detalhes em roxo */
+    color: #545155;
+    padding: 50px; /* Ajusta o padding do botão */
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    margin: 90px 0; /* Espaço ao redor do botão */
+    margin-left: 40px;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+    width: 70%;
+    height: 100%;
+}
+
+button:hover {
+    background: #4b0082; /* Tom de roxo mais escuro */
+}
+
+/* Estilos do grid de portfólio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px; /* Define uma largura máxima para a grid */
+    margin: 20px;
+}
+
+.portfolio-item {
+    background: #222; /* Fundo escuro para os itens do portfólio */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais suave */
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; /* Garante que o conteúdo não exceda o contêiner */
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #BF00FF; /* Detalhes em roxo */
+    border-radius: 10px;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.portfolio-item img:hover {
+    transform: scale(1.1); /* Leve aumento ao passar o mouse */
+    filter: brightness(90%); /* Escurece a imagem ao passar o mouse */
+}

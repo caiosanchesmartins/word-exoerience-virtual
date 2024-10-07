@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Fotógrafos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+        .profile {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .profile img {
+            width: 100%;
+            border-radius: 50%;
+        }
+        .profile h2 {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .profile:hover {
+            background-color: #f0f0f0;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .sidebar {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .sidebar button:hover {
+            background-color: #555;
+        }
+        .section {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .section.active {
+            display: block;
+        }
+        .wallet, .info, .photos, .notifications {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .wallet h2, .info h2, .photos h2, .notifications h2 {
+            margin-top: 0;
+        }
+        .wallet input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .wallet button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .wallet button:hover {
+            background-color: #555;
+        }
+        .photo {
+            width: 30%;
+            margin: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .photo img {
+            width: 100%;
+            height: auto;
+        }
+        .photo-description {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Portfólio dos Fotógrafos</h1>
+        <div class="profile" onclick="toggleSidebar()">
+            <img src="fotografo.jpg" alt="Foto do Fotógrafo">
+            <h2>Nome do Fotógrafo</h2>
+        </div>
+    </header>
+    <div class="sidebar">
+        <button onclick="showSection('wallet')">Carteira</button>
+        <button onclick="showSection('info')">Informações do Fotógrafo</button>
+        <button onclick="showSection('photos')">Minhas Fotos</button>
+        <button onclick="showSection('notifications')">Notificações</button>
+    </div>
+    <div class="container">
+        <div id="wallet" class="section">
+            <h2>Carteira Virtual</h2>
+            <input type="number" id="amount" placeholder="Valor">
+            <button onclick="deposit()">Depositar</button>
+            <button onclick="withdraw()">Sacar</button>
+            <div id="balance">Saldo: R$0.00</div>
+        </div>
+        <div id="info" class="section">
+            <h2>Informações do Fotógrafo</h2>
+            <p>Aqui estão as informações detalhadas sobre o fotógrafo.</p>
+        </div>
+        <div id="photos" class="section">
+            <h2>Minhas Fotos</h2>
+            <div class="photo">
+                <img src="foto1.jpg" alt="Foto 1">
+                <div class="photo-description">
+                    <h3>Descrição da Foto 1</h3>
+                    <p>Detalhes sobre a foto 1.</p>
+                </div>
+            </div>
+            <div class="photo">
+                <img src="foto2.jpg" alt="Foto 2">
+                <div class="photo-description">
+                    <h3>Descrição da Foto 2</h3>
+                    <p>Detalhes sobre a foto 2.</p>
+                </div>
+            </div>
+            <!-- Adicione mais fotos conforme necessário -->
+        </div>
+        <div id="notifications" class="section">
+            <h2>Notificações</h2>
+            <p>Aqui estão suas notificações.</p>
+        </div>
+    </div>
+    <script>
+        let balance = 0;
+
+        function updateBalance() {
+            document.getElementById('balance').innerText = `Saldo: R$${balance.toFixed(2)}`;
+        }
+
+        function deposit() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (!isNaN(amount) && amount > 0) {
+                balance += amount;
+                updateBalance();
+                document.getElementById('amount').value = '';
+            } else {
+                alert('Insira um valor válido para depósito.');
+            }
+        }
+
+        function withdraw() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (!isNaN(amount) && amount > 0 && amount <= balance) {
+                balance -= amount;
+                updateBalance();
+                document.getElementById('amount').value = '';
+            } else {
+                alert('Insira um valor válido para saque.');
+            }
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+            document.querySelector('.sidebar').classList.remove('active');
+        }
+
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
